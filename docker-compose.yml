@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: alokdb
+      POSTGRES_USER: alok
+      POSTGRES_PASSWORD: alokpass
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@alok.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '8081:80'
+
+volumes:
+  db-data:
