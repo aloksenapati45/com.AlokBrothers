@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api, { setToken } from '../services/api';
 import './Signup.css';
 
-export default function Login(){
-  const [form, setForm] = useState({username:'', password:''});
+export default function Login() {
+  const [form, setForm] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
   const [msg, setMsg] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const onChange = e => {
-    setForm({...form, [e.target.name]: e.target.value});
+    setForm({ ...form, [e.target.name]: e.target.value });
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: null });
     }
@@ -34,16 +34,16 @@ export default function Login(){
     if (!validateForm()) return;
     setSubmitting(true);
     setMsg(null);
-    try{
+    try {
       const res = await api.post('/auth/login', form);
       setToken(res.data.token);
       localStorage.setItem('username', form.username);
-      setMsg({type:'success', text:'Logged in successfully'});
+      setMsg({ type: 'success', text: 'Logged in successfully' });
       setTimeout(() => navigate('/dashboard'), 800);
-    }catch(err){
+    } catch (err) {
       const text = err?.response?.data?.error || 'Login failed';
-      setMsg({type:'error', text});
-    }finally{
+      setMsg({ type: 'error', text });
+    } finally {
       setSubmitting(false);
     }
   };
@@ -93,7 +93,7 @@ export default function Login(){
                 type="text"
                 value={form.username}
                 onChange={onChange}
-                placeholder=" "
+                placeholder=" Enter your User name"
                 required
               />
               <label className="field-label" htmlFor="username">Username</label>
@@ -107,7 +107,7 @@ export default function Login(){
                 type="password"
                 value={form.password}
                 onChange={onChange}
-                placeholder=" "
+                placeholder="Enter your Password"
                 required
               />
               <label className="field-label" htmlFor="password">Password</label>
